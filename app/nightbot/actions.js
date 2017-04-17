@@ -64,7 +64,7 @@ export default function(action, user) {
 		if(topHeroes != null && topHeroes.length >= mostPlayedCount) {
 			message = plurlUsername + ' top 3 heroes in Season ' + season + ' are:';
 			for(var i = 0; i < mostPlayedCount; ++i) {
-				message += '\n > ' + topHeroes[i].hero + ': ' + topHeroes[i].played; 
+				message += '<br> > ' + topHeroes[i].hero + ': ' + topHeroes[i].played; 
 			}
 		}
 
