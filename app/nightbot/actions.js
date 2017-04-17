@@ -15,6 +15,12 @@ export default function(action, user) {
 	if(lowerAction == 'randomstat') {
 		message = randomStat(user);
 	}
+	if(lowerAction == 'randomhero') {
+		message = randomHero(user);
+	}
+	if(lowerAction == 'leastplayedhero') {
+		message = leastPlayedHero(user);
+	}
 
 	return message;
 
@@ -117,6 +123,26 @@ export default function(action, user) {
 		var stat = randomStat.value + ' ' + randomStat.title;
 		var message = 'In Season ' + season + ', ' + username + ' has ' + stat;
 
+		return message;
+	}
+
+	function randomHero(user) {
+		var heros = user.stats.top_heroes.quickplay;
+		var heroIndex = getRandomInt(0, heros.length);
+		var hero = heros[heroIndex];
+
+		var message = 'Hero = ' + hero.hero;
+
+		return message;
+	}
+
+	function leastPlayedHero(user) {
+		var username = user.username;
+		var topHeroes = user.stats.top_heroes.competitive;
+		topHeroes.reverse();
+		var theHero = topHeroes[0];
+
+		var message = 'Get ' + username + ' to play ' + theHero.hero + ' ;D';
 		return message;
 	}
 
