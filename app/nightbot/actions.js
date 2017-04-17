@@ -33,7 +33,7 @@ export default function(action, user) {
 		// TODO: test string replace in message
 		// var msg = '{username} current skill rating is {sr} [{rank}]';
 		// var message = plurlUsername + ' current skill rating is ~' + sr + ' [' + rank + ']';
-		var message = 'When ' + username + ' started streaming his skill rating was ' + sr + ' [' + rank + ']';
+		var message = 'When ' + username + ' last started streaming his skill rating was ' + sr + ' [' + rank + ']';
 		return message;
 	}
 
@@ -49,7 +49,7 @@ export default function(action, user) {
 		if(win != null && total != null) {
 			var loss = total - win;
 			// message = plurlUsername + ' win-loss for Season ' + season + ' is ' + win + '-' + loss;
-			message = 'When ' + username + ' started streaming his win-loss for Season ' + season + ' was ' + win + '-' + loss;
+			message = 'When ' + username + ' last started streaming his win-loss for Season ' + season + ' was ' + win + '-' + loss;
 		}
 		return message;
 	}
@@ -64,7 +64,7 @@ export default function(action, user) {
 		if(topHeroes != null && topHeroes.length >= mostPlayedCount) {
 			message = plurlUsername + ' top 3 heroes in Season ' + season + ' are:';
 			for(var i = 0; i < mostPlayedCount; ++i) {
-				message += '<br> > ' + topHeroes[i].hero + ': ' + topHeroes[i].played; 
+				message += '  (' + (i+1) + ') ' + topHeroes[i].hero + ': ' + topHeroes[i].played; 
 			}
 		}
 
