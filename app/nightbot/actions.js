@@ -9,14 +9,15 @@ export default function(action, user) {
 	if(lowerAction == 'winloss') {
 		message = winLoss(user);
 	}
-	if(lowerAction == "topHeroes") {
+	if(lowerAction == "topheroes") {
 		message = topHeroes(user);
 	}
 
 	return message;
 
 	function skillRating(user){
-		var plurlUsername = getPlurlUsernameFromUser(user);
+		var username = user.username;
+		// var plurlUsername = getPlurlUsernameFromUser(user);
 		var sr = user.competitive.rank;
 
 		// NOTE: Will have to figure out what happens if unranked?
@@ -31,12 +32,14 @@ export default function(action, user) {
 		
 		// TODO: test string replace in message
 		// var msg = '{username} current skill rating is {sr} [{rank}]';
-
-		return plurlUsername + ' current skill rating is ~' + sr + ' [' + rank + ']';
+		// var message = plurlUsername + ' current skill rating is ~' + sr + ' [' + rank + ']';
+		var message = 'When ' + username + ' started streaming his skill rating was ' + sr + ' [' + rank + ']';
+		return message;
 	}
 
 	function winLoss(user){
-		var plurlUsername = getPlurlUsernameFromUser(user);
+		var username = user.username;
+		// var plurlUsername = getPlurlUsernameFromUser(user);
 
 		var compGameStats = user.games.competitive;
 		var win = compGameStats.wins;
@@ -45,7 +48,8 @@ export default function(action, user) {
 		var message = 'Data not available for ' + plurlUsername + ' win-loss at this time';
 		if(win != null && total != null) {
 			var loss = total - win;
-			message = plurlUsername + ' win-loss for Season ' + season + ' is ' + win + '-' + loss;
+			// message = plurlUsername + ' win-loss for Season ' + season + ' is ' + win + '-' + loss;
+			message = 'When ' + username + ' started streaming his win-loss for Season ' + season + ' was ' + win + '-' + loss;
 		}
 		return message;
 	}
