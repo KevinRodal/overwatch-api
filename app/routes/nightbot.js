@@ -7,7 +7,7 @@ import cache from '../cache';
 
 router.get('/:platform/:region/:tag/:action', (req, res) => {
 
-  console.log(req.headers);
+  console.log(req);
 
   const action = req.params.action;
   const platform = req.params.platform;
