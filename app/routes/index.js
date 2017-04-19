@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 import { name, description, version, bugs, homepage } from '../../package.json';
 
-
 /**
  * @api {get} / Get API status.
  * @apiName GetAPI

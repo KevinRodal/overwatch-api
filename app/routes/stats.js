@@ -1,52 +1,37 @@
 const express = require('express');
 const router = express.Router();
 
-import parse from '../parser/stats';
+import parse from '../parser/user';
+import stats from '../stats/stats';
 import cache from '../cache';
+import constants from '../constants';
 
-/**
- * @api {get} /stats/:platform/:region/:tag Get profile of player.
- * @apiName GetStats
- * @apiGroup Stats
- *
- * @apiParam {String} platform Name of user. pc/xbl/psn
- * @apiParam {String} region Region of player. us/eu/kr/cn/global
- * @apiParam {String} tag BattleTag of user. Replace # with -.
- * @apiSuccess {Object} data Profile data.
- *
- * @apiExample {curl} Example usage:
- *  curl -i http://ow-api.herokuapp.com/stats/pc/us/user-12345
- *
- * @apiSuccessExample {json} Success-Response:
-    HTTP/1.1 200 OK
-    {
-      username: "user"
-      stats: {
-        top_heroes: {...}
-        combat: {...}
-      }
-    }
- */
-router.get('/:platform/:region/:tag', (req, res) => {
-
+router.get('/:platform/:region/:tag/:action', (req, res) => {
+  
   const platform = req.params.platform;
   const region = req.params.region;
   const tag = req.params.tag;
+  const action = req.params.action;
 
-  const cacheKey = `stats_${platform}_${region}_${tag}`;
-  const timeout = 60 * 5; // 5 minutes.
+  const cacheKey = `user_${platform}_${region}_${tag}`;
 
-  cache.getOrSet(cacheKey, timeout, getStats, function(data) {
+  cache.getOrSet(cacheKey, constants.timeout, getUser, function(data) {
     if (data.statusCode) {
       res.status(data.response.statusCode).send(data.response.statusMessage);
     } else {
-      res.json(data);
+      if(action == 'json') {
+        res.json(data);
+      }
+      else {
+        var message = stats(action, data);
+        res.send(message);
+      }
     }
   });
 
-  function getStats(callback) {
+  function getUser(callback) {
     parse(platform, region, tag, (data) => {
-      callback(data);
+        callback(data);
     });
   }
 });
