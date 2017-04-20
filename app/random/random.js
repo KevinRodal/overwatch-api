@@ -60,6 +60,9 @@ export default function(action, headers) {
 		var randomIndex = utils.getRandomInt(0, jokes.length);
 		var joke = jokes[randomIndex];
 
+		var caller = header['nightbot-user'];
+		// separate query params and find username
+
 		var nightbotPostBack = headers['nightbot-response-url'];
 		if(nightbotPostBack != null) {
 			var nightbotMessage = {
