@@ -1,5 +1,6 @@
-export default function(action) {
+export default function(action, headers) {
 	var utils = require('../utils.js');
+	var request = require('request');
 
 	var actions = {
 		seagull: getSeagullMessages,
@@ -7,6 +8,10 @@ export default function(action) {
 	};
 
 	var lowerAction = action.toLowerCase();
+	if(lowerAction == 'joke') {
+		return getJoke(headers);
+	}
+
 	var fAction = actions[lowerAction];
 	if(fAction == null) {
 		return 'The action "' + action + '" was not recognized';
@@ -30,6 +35,50 @@ export default function(action) {
 		];	
 
 		return messages;
+	}
+
+	function getJoke(headers) {
+		var jokes = [
+			{
+				question: 'Why is Mercy the top support?',
+				answer: 'Because she has high heals!'
+			},
+			{
+				question: 'What did Pharah say during the hail storm?',
+				answer: 'Just ice rains from above!'
+			},
+			{
+				question: 'What did Zenyatta say when Tracer asked if he had something in his eye?',
+				answer: 'Yes, it\'s in the iris'
+			},
+			{
+				question: 'Tracer, D.Va and Mei walk into a bar.',
+				answer: 'Only Mei walks out...'
+			}
+		];
+
+		var randomIndex = utils.getRandomInt(0, jokes.length);
+		var joke = jokes[randomIndex];
+
+		var nightbotPostBack = headers['nightbot-response-url'];
+		if(nightbotPostBack != null) {
+			var nightbotMessage = {
+				message: joke.answer
+			}
+
+			setTimeout(function() {				
+				request({
+					url: nightbotPostBack,
+					method: 'POST',
+					json: nightbotMessage
+				}, function (error, response, body) {
+					// console.log(response);
+				});
+				
+			}, 15000);
+		}
+
+		return joke.question;
 	}
 
 	function getHeroes() {

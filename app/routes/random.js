@@ -5,7 +5,8 @@ import random from '../random/random';
 
 router.get('/:action', (req, res) => {
   const action = req.params.action;
-  var message = random(action);
+  const headers = req.headers;
+  var message = random(action, headers);
   res.send(message);
 });
 
