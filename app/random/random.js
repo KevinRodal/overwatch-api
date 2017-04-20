@@ -1,5 +1,6 @@
 export default function(action, headers) {
 	var utils = require('../utils.js');
+	var constants = require('../constants.js');
 	var request = require('request');
 
 	var actions = {
@@ -9,6 +10,7 @@ export default function(action, headers) {
 
 	var lowerAction = action.toLowerCase();
 	if(lowerAction == 'joke') {
+		headers['nightbot-user'] = ('name=fuzzycevin&displayName=FuzzyCevin&provider=twitch&providerId=76210611&userLevel=owner');
 		return getJoke(headers);
 	}
 
@@ -60,13 +62,33 @@ export default function(action, headers) {
 		var randomIndex = utils.getRandomInt(0, jokes.length);
 		var joke = jokes[randomIndex];
 
-		var caller = headers['nightbot-user'];
+		var callerParamString = headers['nightbot-user'];
+		console.log(callerParamString);
 		// separate query params and find username
+		var params = callerParamString.split('&');
+		console.log(params);
+		var caller = {};
+		for(var i = 0; i < params.length; ++i) {
+			var parts = params[i].split('=');
+			caller[parts[0]] = parts[1];
+		}
+
+		var message = joke.question;
+		var answer = joke.answer;
+		
+		var displayName = caller.displayName;
+		if(displayName != null) {
+			message = '@' + displayName + ' ' + message;
+			answer = '@' + displayName + ' ' + answer;
+		}
+
+		console.log(message);
+		console.log(answer);
 
 		var nightbotPostBack = headers['nightbot-response-url'];
 		if(nightbotPostBack != null) {
 			var nightbotMessage = {
-				message: joke.answer
+				message: answer
 			}
 
 			setTimeout(function() {				
@@ -78,10 +100,10 @@ export default function(action, headers) {
 					// console.log(response);
 				});
 				
-			}, 15000);
-		}
+			}, constants.jokeDelayTime);
+		}		
 
-		return joke.question;
+		return message;
 	}
 
 	function getHeroes() {
