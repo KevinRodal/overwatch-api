@@ -13,7 +13,7 @@ var jokes = [
 	composeJoke('What did Zenyatta say when Tracer asked if he had something in his eye?', 'Yes, it\'s in the iris'),
 	composeJoke('Tracer, D.Va and Mei walk into a bar.', 'Only Mei walks out...'),
 	composeJoke('What\'s a more appropriate name for Ana\'s ultimate?', 'Nanaboost!'),
-	composeJoke('Why didn\'t Zarya get in fron of the rest of her team?', 'She was Russian, and everyone else was Stalin.'),
+	composeJoke('Why didn\'t Zarya get in front of the rest of her team?', 'She was Russian, and everyone else was Stalin.'),
 	composeJoke('Why is capture the flag Mccree\'s favorite game mode?', 'Because every round ends in a draw.'),
 	composeJoke('What do you call a Mercy that only pockets a Roadhog?', 'A Hogpocket :D'),
 	composeJoke('How did Widowmaker describe an assassination in Mexico?', 'Juan shot, Juan kill.'),
