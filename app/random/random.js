@@ -10,7 +10,6 @@ export default function(action, headers) {
 
 	var lowerAction = action.toLowerCase();
 	if(lowerAction == 'joke') {
-		headers['nightbot-user'] = ('name=fuzzycevin&displayName=FuzzyCevin&provider=twitch&providerId=76210611&userLevel=owner');
 		return getJoke(headers);
 	}
 
