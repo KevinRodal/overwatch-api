@@ -40,50 +40,22 @@ export default function(action, headers) {
 	}
 
 	function getJoke(headers) {
-		var jokes = [
-			{
-				question: 'Why is Mercy the top support?',
-				answer: 'Because she has high heals!'
-			},
-			{
-				question: 'What did Pharah say during the hail storm?',
-				answer: 'Just ice rains from above!'
-			},
-			{
-				question: 'What did Zenyatta say when Tracer asked if he had something in his eye?',
-				answer: 'Yes, it\'s in the iris'
-			},
-			{
-				question: 'Tracer, D.Va and Mei walk into a bar.',
-				answer: 'Only Mei walks out...'
-			}
-		];
+		var jokes = constants.jokes;
 
 		var randomIndex = utils.getRandomInt(0, jokes.length);
 		var joke = jokes[randomIndex];
 
 		var callerParamString = headers['nightbot-user'];
-		console.log(callerParamString);
-		// separate query params and find username
-		var params = callerParamString.split('&');
-		console.log(params);
-		var caller = {};
-		for(var i = 0; i < params.length; ++i) {
-			var parts = params[i].split('=');
-			caller[parts[0]] = parts[1];
-		}
+		var callerParams = utils.parseHeaderValues(callerParamString);
 
 		var message = joke.question;
 		var answer = joke.answer;
 		
-		var displayName = caller.displayName;
+		var displayName = callerParams.displayName;
 		if(displayName != null) {
 			message = '@' + displayName + ' ' + message;
 			answer = '@' + displayName + ' ' + answer;
 		}
-
-		console.log(message);
-		console.log(answer);
 
 		var nightbotPostBack = headers['nightbot-response-url'];
 		if(nightbotPostBack != null) {
