@@ -17,7 +17,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node node_modules/srv-cli/build/srv app/index.js",
+    "start": "node node_modules/srv-cli/build/srv --port 3000 app/index.js",
     "start-dev": "nodemon node_modules/srv-cli/build/srv app/index.js",
     "docs": "node node_modules/srv-cli/build/srv app/index.js --docs app/routes"
   },
